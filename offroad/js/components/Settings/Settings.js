@@ -140,8 +140,7 @@ class Settings extends Component {
     }
     
     handlePressedUpdateMdps = async () => {
-        Alert.alert('Select MDPS Harness Type', '
-                     Type1(CAN1)       Type2(OBD/Comma Power)', [
+        Alert.alert('Select MDPS Harness Type', 'Type1(CAN1)       Type2(OBD/Comma Power)', [
             { text: 'Cancel', onPress: () => {}, style: 'cancel' },
             { text: 'Type1', onPress: () => ChffrPlus.updateMdpsType1() },
             { text: 'Type2', onPress: () => ChffrPlus.updateMdpsType2() },
@@ -725,6 +724,17 @@ class Settings extends Component {
                                     handleExpanded={ () => this.handleExpanded('scc_enabled') }
                                     handleChanged={ this.props.setSccEnabled } />
                             ) : null }
+                            { !parseInt(isPassive) && !!parseInt(communityFeatures) && !!parseInt(sccEnabled)? (
+                                <X.TableCell
+                                    type='switch'
+                                    title='Enable OP with Cruise Control'
+                                    value={ !!parseInt(enableOPwithCC) }
+                                    iconSource={ Icons.speedLimit }
+                                    description='Enable OP with Cruise Engage, Disable this toggle if OP should be to engaged with cruise buttons'
+                                    isExpanded={ expandedCell == 'enableOPwithCC_enabled' }
+                                    handleExpanded={ () => this.handleExpanded('enableOPwithCC_enabled') }
+                                    handleChanged={ this.props.setEnableOPwithCC } />
+                            ) : null }
                             { !parseInt(isPassive) && !!parseInt(communityFeatures) ? (
                                 <X.TableCell
                                     type='switch'
@@ -751,17 +761,6 @@ class Settings extends Component {
                                     onPress={ this.handlePressedUpdateRevertMdps  }>
                                     Revert MDPS Harness to Stock
                                 </X.Button>
-                            ) : null }
-                            { !parseInt(isPassive) && !!parseInt(communityFeatures) ? (
-                                <X.TableCell
-                                    type='switch'
-                                    title='Enable OP with Cruise Control'
-                                    value={ !!parseInt(enableOPwithCC) }
-                                    iconSource={ Icons.speedLimit }
-                                    description='Enable OP with Cruise Engage, Disable this toggle if OP should be to engaged with cruise buttons'
-                                    isExpanded={ expandedCell == 'enableOPwithCC_enabled' }
-                                    handleExpanded={ () => this.handleExpanded('enableOPwithCC_enabled') }
-                                    handleChanged={ this.props.setEnableOPwithCC } />
                             ) : null }
                         <X.TableCell
                             type='switch'
