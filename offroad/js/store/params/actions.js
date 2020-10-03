@@ -47,7 +47,8 @@ const PARAMS = [
   "LongControlEnabled",
   "RadarDisableEnabled",
   "MdpsHarnessEnabled",
-  "SccEnabled",  
+  "SccEnabled",
+  "EnableOPwithCC",
   "IsRHD"
 ].concat(ALERT_PARAMS);
 

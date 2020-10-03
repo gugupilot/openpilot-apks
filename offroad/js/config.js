@@ -42,5 +42,6 @@ export const Params = {
     KEY_LONG_CONTROL_ENABLED: 'LongControlEnabled',
     KEY_RADAR_DISABLE_ENABLED: 'RadarDisableEnabled',
     KEY_MDPS_HARNESS_ENABLED: 'MdpsHarnessEnabled',
-    KEY_SCC_ENABLED: 'SccEnabled',    
+    KEY_SCC_ENABLED: 'SccEnabled',
+    KEY_OP_ENABLE_W_CRUISE: 'EnableOPwithCC',
 };

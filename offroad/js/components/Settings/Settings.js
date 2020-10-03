@@ -651,7 +651,8 @@ class Settings extends Component {
                 LongControlEnabled: longControlEnabled,
                 RadarDisableEnabled: radarDisableEnabled,
                 MdpsHarnessEnabled: mdpsHarnessEnabled,
-                SccEnabled: sccEnabled,                
+                SccEnabled: sccEnabled,
+                EnableOPwithCC: enableOPwithCC,
             },
         } = this.props;
         const { expandedCell } = this.state;
@@ -711,7 +712,7 @@ class Settings extends Component {
                                     title='Vehicle has SCC'
                                     value={ !!parseInt(sccEnabled) }
                                     iconSource={ Icons.speed_limit }
-                                    description='Car has stock SCC and has radar that sends 1057 message, check fingerprint to confirm you have 1057 msg'
+                                    description='Car has stock SCC and has radar that sends 1057 message, check fingerprint to confirm the car has 1057 msg'
                                     isExpanded={ expandedCell == 'scc_enabled' }
                                     handleExpanded={ () => this.handleExpanded('scc_enabled') }
                                     handleChanged={ this.props.setSccEnabled } />
@@ -734,6 +735,17 @@ class Settings extends Component {
                                     onPress={ this.handlePressedUpdateMdps  }>
                                     Update MDPS Type
                                 </X.Button>
+                            ) : null }
+                            { !parseInt(isPassive) && !!parseInt(communityFeatures) ? (
+                                <X.TableCell
+                                    type='switch'
+                                    title='Enable OP with Cruise Control'
+                                    value={ !!parseInt(enableOPwithCC) }
+                                    iconSource={ Icons.speedLimit }
+                                    description='Enable OP with Cruise Engage, Disable this toggle if OP should be to engaged with cruise buttons'
+                                    isExpanded={ expandedCell == 'enableOPwithCC_enabled' }
+                                    handleExpanded={ () => this.handleExpanded('enableOPwithCC_enabled') }
+                                    handleChanged={ this.props.setEnableOPwithCC } />
                             ) : null }
                         <X.TableCell
                             type='switch'
@@ -1040,7 +1052,10 @@ const mapDispatchToProps = dispatch => ({
     },
     setSccEnabled: (sccEnabled) => {
         dispatch(updateParam(Params.KEY_SCC_ENABLED, (sccEnabled | 0).toString()));
-    },    
+    },
+    setEnableOPwithCC: (enableOPwithCC) => {
+        dispatch(updateParam(Params.KEY_OP_ENABLE_W_CRUISE, (enableOPwithCC | 0).toString()));
+    },
     deleteParam: (param) => {
         dispatch(deleteParam(param));
     },
