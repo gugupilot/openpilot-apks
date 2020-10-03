@@ -741,16 +741,17 @@ class Settings extends Component {
                                     size='small'
                                     color='settingsDefault'
                                     onPress={ this.handlePressedUpdateMdps  }>
-                                    Update MDPS Type
+                                    Update MDPS Harness Type
                                 </X.Button>
-                            ) : (
+                            ) : null }
+                            { !parseInt(isPassive) && !!parseInt(communityFeatures) && !parseInt(mdpsHarnessEnabled) ? (
                                 <X.Button
                                     size='small'
                                     color='settingsDefault'
                                     onPress={ this.handlePressedUpdateRevertMdps  }>
                                     Revert MDPS Harness to Stock
                                 </X.Button>
-                            ) }
+                            ) : null }
                             { !parseInt(isPassive) && !!parseInt(communityFeatures) ? (
                                 <X.TableCell
                                     type='switch'
