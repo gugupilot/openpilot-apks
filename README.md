@@ -1,4 +1,4 @@
-# openpilot-apks
+# XPS openpilot-apks
 
 The source code for the APKs that run alongside openpilot.
 
