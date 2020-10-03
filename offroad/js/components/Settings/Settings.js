@@ -132,14 +132,14 @@ class Settings extends Component {
     }
     
     handlePressedUpdatePanda = async () => {
-        Alert.alert('Flash Panda', 'Panda firmware will flash and the device will reboot', [
+        Alert.alert('Flash Panda', 'Flash Panda Firmware and Reboot', [
             { text: 'Cancel', onPress: () => {}, style: 'cancel' },
             { text: 'Run', onPress: () => ChffrPlus.updatePandaFirmware() },
         ]);
     }
     
     handlePressedUpdateMdps = async () => {
-        Alert.alert('Select MDPS Harness Type', 'Panda will update and reboot. Type0(Stock) , Type1(CAN1) , Type2(OBD/Comma Power)', [
+        Alert.alert('Select MDPS Harness Type', 'Select MDPS Type. Type0(Stock) , Type1(CAN1) , Type2(OBD/Comma Power)', [
             { text: 'Cancel', onPress: () => {}, style: 'cancel' },
             { text: 'Type0', onPress: () => ChffrPlus.updateMdpsType0() },
             { text: 'Type1', onPress: () => ChffrPlus.updateMdpsType1() },

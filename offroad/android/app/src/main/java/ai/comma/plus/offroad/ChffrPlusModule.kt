@@ -254,7 +254,7 @@ class ChffrPlusModule(val ctx: ReactApplicationContext) :
             CloudLog.exception("BaseUIReactModule.updatePanda", e)
         }
     }
-    
+
     @ReactMethod
     fun updateMdpsType0() {
         try {
