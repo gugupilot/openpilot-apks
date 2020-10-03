@@ -256,11 +256,11 @@ class ChffrPlusModule(val ctx: ReactApplicationContext) :
     }
 
     @ReactMethod
-    fun updateMdpsType0() {
+    fun updateRevertMdps() {
         try {
             Runtime.getRuntime().exec(arrayOf("/system/bin/su", "-c", "sh /data/openpilot/panda_mdpstype0.sh"))
         } catch (e: IOException) {
-            CloudLog.exception("BaseUIReactModule.updateMdpsType0", e)
+            CloudLog.exception("BaseUIReactModule.updateRevertMdps", e)
         }
     }   
 
@@ -280,8 +280,8 @@ class ChffrPlusModule(val ctx: ReactApplicationContext) :
         } catch (e: IOException) {
             CloudLog.exception("BaseUIReactModule.updateMdpsType2", e)
         }
-    }                
-                                
+    }
+
     @ReactMethod
     fun getSimState(promise: Promise) {
         promise.resolve(getCellState())

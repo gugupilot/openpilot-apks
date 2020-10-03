@@ -55,6 +55,7 @@ const Icons = {
     road: require('../../img/icon_road.png'),
     aeb: require('../../img/icon_aeb.png'),
     mdps: require('../../img/icon_mdps.png'),
+    scc: require('../../img/icon_scc.png'),
 }
 
 class Settings extends Component {
@@ -139,13 +140,20 @@ class Settings extends Component {
     }
     
     handlePressedUpdateMdps = async () => {
-        Alert.alert('Select MDPS Harness Type', 'Select MDPS Type. Type0(Stock) , Type1(CAN1) , Type2(OBD/Comma Power)', [
+        Alert.alert('Select MDPS Harness Type', '
+                     Type1(CAN1)       Type2(OBD/Comma Power)', [
             { text: 'Cancel', onPress: () => {}, style: 'cancel' },
-            { text: 'Type0', onPress: () => ChffrPlus.updateMdpsType0() },
             { text: 'Type1', onPress: () => ChffrPlus.updateMdpsType1() },
             { text: 'Type2', onPress: () => ChffrPlus.updateMdpsType2() },
         ]);
-    }    
+    }
+
+    handlePressedUpdateRevertMdps = async () => {
+        Alert.alert('Revert MDPS Harness Logic to Stock', [
+            { text: 'Cancel', onPress: () => {}, style: 'cancel' },
+            { text: 'Run', onPress: () => ChffrPlus.updateRevertMdps() },
+        ]);
+    }   
     // handleChangedSpeedLimitOffset(operator) {
     //     const { speedLimitOffset, isMetric } = this.props;
     //     let _speedLimitOffset;
@@ -690,7 +698,7 @@ class Settings extends Component {
                                     title='Activate Radar Disable'
                                     value={ !!parseInt(radarDisableEnabled) }
                                     iconSource={ Icons.aeb }
-                                    description='WARNING!! This will send UDS command to Disable the Radar, All stock safety features will be disabled'
+                                    description='WARNING!! This will send UDS command to disable the Radar, All stock safety features will be disabled'
                                     isExpanded={ expandedCell == 'radardisable_enabled' }
                                     handleExpanded={ () => this.handleExpanded('radardisable_enabled') }
                                     handleChanged={ this.props.setRadarDisableEnabled } />
@@ -701,7 +709,7 @@ class Settings extends Component {
                                     title='Enable OP Long Control'
                                     value={ !!parseInt(longControlEnabled) }
                                     iconSource={ Icons.openpilot }
-                                    description='OP Long will be enabled if supported'
+                                    description='OP Long will be enabled if available'
                                     isExpanded={ expandedCell == 'longcontrol_enabled' }
                                     handleExpanded={ () => this.handleExpanded('longcontrol_enabled') }
                                     handleChanged={ this.props.setLongControlEnabled } />
@@ -709,9 +717,9 @@ class Settings extends Component {
                             { !parseInt(isPassive) && !!parseInt(communityFeatures) ? (
                                 <X.TableCell
                                     type='switch'
-                                    title='Vehicle has SCC'
+                                    title='Stock SCC Present'
                                     value={ !!parseInt(sccEnabled) }
-                                    iconSource={ Icons.speed_limit }
+                                    iconSource={ Icons.scc }
                                     description='Car has stock SCC and has radar that sends 1057 message, check fingerprint to confirm the car has 1057 msg'
                                     isExpanded={ expandedCell == 'scc_enabled' }
                                     handleExpanded={ () => this.handleExpanded('scc_enabled') }
@@ -728,14 +736,21 @@ class Settings extends Component {
                                     handleExpanded={ () => this.handleExpanded('mdpsHarness_enabled') }
                                     handleChanged={ this.props.setMdpsHarnessEnabled } />
                             ) : null }
-                            { !parseInt(isPassive) && !!parseInt(communityFeatures) && !!parseInt(mdpsHarnessEnabled) ? (                                
+                            { !parseInt(isPassive) && !!parseInt(communityFeatures) && !!parseInt(mdpsHarnessEnabled) ? (
                                 <X.Button
                                     size='small'
                                     color='settingsDefault'
                                     onPress={ this.handlePressedUpdateMdps  }>
                                     Update MDPS Type
                                 </X.Button>
-                            ) : null }
+                            ) : (
+                                <X.Button
+                                    size='small'
+                                    color='settingsDefault'
+                                    onPress={ this.handlePressedUpdateRevertMdps  }>
+                                    Revert MDPS Harness to Stock
+                                </X.Button>
+                            ) }
                             { !parseInt(isPassive) && !!parseInt(communityFeatures) ? (
                                 <X.TableCell
                                     type='switch'
