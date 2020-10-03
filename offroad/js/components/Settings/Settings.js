@@ -53,6 +53,8 @@ const Icons = {
     openpilot_mirrored: require('../../img/icon_openpilot_mirrored.png'),
     monitoring: require('../../img/icon_monitoring.png'),
     road: require('../../img/icon_road.png'),
+    aeb: require('../../img/icon_aeb.png'),
+    mdps: require('../../img/icon_mdps.png'),
 }
 
 class Settings extends Component {
@@ -128,7 +130,22 @@ class Settings extends Component {
         this.props.deleteParam(Params.KEY_CALIBRATION_PARAMS);
         this.props.deleteParam(Params.KEY_LIVE_PARAMETERS);
     }
-
+    
+    handlePressedUpdatePanda = async () => {
+        Alert.alert('Flash Panda', 'Panda firmware will flash and the device will reboot', [
+            { text: 'Cancel', onPress: () => {}, style: 'cancel' },
+            { text: 'Run', onPress: () => ChffrPlus.updatePandaFirmware() },
+        ]);
+    }
+    
+    handlePressedUpdateMdps = async () => {
+        Alert.alert('Select MDPS Harness Type', 'Panda will update and reboot. Type0(Stock) , Type1(CAN1) , Type2(OBD/Comma Power)', [
+            { text: 'Cancel', onPress: () => {}, style: 'cancel' },
+            { text: 'Type0', onPress: () => ChffrPlus.updateMdpsType0() },
+            { text: 'Type1', onPress: () => ChffrPlus.updateMdpsType1() },
+            { text: 'Type2', onPress: () => ChffrPlus.updateMdpsType2() },
+        ]);
+    }    
     // handleChangedSpeedLimitOffset(operator) {
     //     const { speedLimitOffset, isMetric } = this.props;
     //     let _speedLimitOffset;
@@ -630,6 +647,11 @@ class Settings extends Component {
                 PandaFirmwareHex: pandaFirmwareHex,
                 PandaDongleId: pandaDongleId,
                 CommunityFeaturesToggle: communityFeatures,
+                LaneChangeEnabled: laneChangeEnabled,
+                LongControlEnabled: longControlEnabled,
+                RadarDisableEnabled: radarDisableEnabled,
+                MdpsHarnessEnabled: mdpsHarnessEnabled,
+                SccEnabled: sccEnabled,                
             },
         } = this.props;
         const { expandedCell } = this.state;
@@ -661,6 +683,58 @@ class Settings extends Component {
                             isExpanded={ expandedCell == 'communityFeatures' }
                             handleExpanded={ () => this.handleExpanded('communityFeatures') }
                             handleChanged={ this.props.setCommunityFeatures } />
+                            { !parseInt(isPassive) && !!parseInt(communityFeatures) ? (
+                                <X.TableCell
+                                    type='switch'
+                                    title='Activate Radar Disable'
+                                    value={ !!parseInt(radarDisableEnabled) }
+                                    iconSource={ Icons.aeb }
+                                    description='WARNING!! This will send UDS command to Disable the Radar, All stock safety features will be disabled'
+                                    isExpanded={ expandedCell == 'radardisable_enabled' }
+                                    handleExpanded={ () => this.handleExpanded('radardisable_enabled') }
+                                    handleChanged={ this.props.setRadarDisableEnabled } />
+                            ) : null }                                
+                            { !parseInt(isPassive) && !!parseInt(communityFeatures) ? (
+                                <X.TableCell
+                                    type='switch'
+                                    title='Enable OP Long Control'
+                                    value={ !!parseInt(longControlEnabled) }
+                                    iconSource={ Icons.openpilot }
+                                    description='OP Long will be enabled if supported'
+                                    isExpanded={ expandedCell == 'longcontrol_enabled' }
+                                    handleExpanded={ () => this.handleExpanded('longcontrol_enabled') }
+                                    handleChanged={ this.props.setLongControlEnabled } />
+                            ) : null }
+                            { !parseInt(isPassive) && !!parseInt(communityFeatures) ? (
+                                <X.TableCell
+                                    type='switch'
+                                    title='Vehicle has SCC'
+                                    value={ !!parseInt(sccEnabled) }
+                                    iconSource={ Icons.speed_limit }
+                                    description='Car has stock SCC and has radar that sends 1057 message, check fingerprint to confirm you have 1057 msg'
+                                    isExpanded={ expandedCell == 'scc_enabled' }
+                                    handleExpanded={ () => this.handleExpanded('scc_enabled') }
+                                    handleChanged={ this.props.setSccEnabled } />
+                            ) : null }
+                            { !parseInt(isPassive) && !!parseInt(communityFeatures) ? (
+                                <X.TableCell
+                                    type='switch'
+                                    title='Mdps Harness Present'
+                                    value={ !!parseInt(mdpsHarnessEnabled) }
+                                    iconSource={ Icons.mdps }
+                                    description='Enable logic for MDPS Hanress'
+                                    isExpanded={ expandedCell == 'mdpsHarness_enabled' }
+                                    handleExpanded={ () => this.handleExpanded('mdpsHarness_enabled') }
+                                    handleChanged={ this.props.setMdpsHarnessEnabled } />
+                            ) : null }
+                            { !parseInt(isPassive) && !!parseInt(communityFeatures) && !!parseInt(mdpsHarnessEnabled) ? (                                
+                                <X.Button
+                                    size='small'
+                                    color='settingsDefault'
+                                    onPress={ this.handlePressedUpdateMdps  }>
+                                    Update MDPS Type
+                                </X.Button>
+                            ) : null }
                         <X.TableCell
                             type='switch'
                             title='Enable SSH'
@@ -705,6 +779,12 @@ class Settings extends Component {
                             title='Panda Dongle ID'
                             value={ (pandaDongleId != null && pandaDongleId != "unprovisioned") ? pandaDongleId : 'N/A' }
                             valueTextSize='tiny' />
+                        <X.Button
+                            size='small'
+                            color='settingsDefault'
+                            onPress={ this.handlePressedUpdatePanda  }>
+                            Flash Panda
+                        </X.Button>
                     </X.Table>
                     <X.Table color='darkBlue' padding='big'>
                         <X.Button
@@ -949,6 +1029,18 @@ const mapDispatchToProps = dispatch => ({
     setLaneChangeEnabled: (laneChangeEnabled) => {
         dispatch(updateParam(Params.KEY_LANE_CHANGE_ENABLED, (laneChangeEnabled | 0).toString()));
     },
+    setLongControlEnabled: (longControlEnabled) => {
+        dispatch(updateParam(Params.KEY_LONG_CONTROL_ENABLED, (longControlEnabled | 0).toString()));
+    },
+    setRadarDisableEnabled: (radarDisableEnabled) => {
+        dispatch(updateParam(Params.KEY_RADAR_DISABLE_ENABLED, (radarDisableEnabled | 0).toString()));
+    },
+    setMdpsHarnessEnabled: (mdpsHarnessEnabled) => {
+        dispatch(updateParam(Params.KEY_MDPS_HARNESS_ENABLED, (mdpsHarnessEnabled | 0).toString()));
+    },
+    setSccEnabled: (sccEnabled) => {
+        dispatch(updateParam(Params.KEY_SCC_ENABLED, (sccEnabled | 0).toString()));
+    },    
     deleteParam: (param) => {
         dispatch(deleteParam(param));
     },

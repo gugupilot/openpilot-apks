@@ -44,6 +44,10 @@ const PARAMS = [
   "CommunityFeaturesToggle",
   "IsLdwEnabled",
   "LaneChangeEnabled",
+  "LongControlEnabled",
+  "RadarDisableEnabled",
+  "MdpsHarnessEnabled",
+  "SccEnabled",  
   "IsRHD"
 ].concat(ALERT_PARAMS);
 
