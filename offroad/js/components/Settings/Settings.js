@@ -697,18 +697,18 @@ class Settings extends Component {
                                     title='Activate Radar Disable'
                                     value={ !!parseInt(radarDisableEnabled) }
                                     iconSource={ Icons.aeb }
-                                    description='WARNING!! This will send UDS command to disable the Radar, All stock safety features will be disabled'
+                                    description='!!WARNING!! Enabling will send UDS command to disable the Radar, all stock active safety systems will be disabled. Only enable if you fully understand the functionality of vision based OP Long'
                                     isExpanded={ expandedCell == 'radardisable_enabled' }
                                     handleExpanded={ () => this.handleExpanded('radardisable_enabled') }
                                     handleChanged={ this.props.setRadarDisableEnabled } />
                             ) : null }                                
-                            { !parseInt(isPassive) && !!parseInt(communityFeatures) ? (
+                            { !parseInt(isPassive) && !!parseInt(communityFeatures) && !parseInt(radarDisableEnabled)? (
                                 <X.TableCell
                                     type='switch'
                                     title='Enable OP Long Control'
                                     value={ !!parseInt(longControlEnabled) }
                                     iconSource={ Icons.openpilot }
-                                    description='OP Long will be enabled if available'
+                                    description='This toggle is used if SCC is availble on BUS2 with SCC Harness, This toggle wil also stop SCC messages from being create for non SCC vehicles'
                                     isExpanded={ expandedCell == 'longcontrol_enabled' }
                                     handleExpanded={ () => this.handleExpanded('longcontrol_enabled') }
                                     handleChanged={ this.props.setLongControlEnabled } />
@@ -724,13 +724,13 @@ class Settings extends Component {
                                     handleExpanded={ () => this.handleExpanded('scc_enabled') }
                                     handleChanged={ this.props.setSccEnabled } />
                             ) : null }
-                            { !parseInt(isPassive) && !!parseInt(communityFeatures) && !!parseInt(sccEnabled)? (
+                            { !parseInt(isPassive) && !!parseInt(communityFeatures) && !!parseInt(sccEnabled) && !parseInt(longcontrol_enabled) && !parseInt(radarDisableEnabled) ? (
                                 <X.TableCell
                                     type='switch'
-                                    title='Enable OP with Cruise Control'
+                                    title='Enable OP with SCC active'
                                     value={ !!parseInt(enableOPwithCC) }
                                     iconSource={ Icons.speedLimit }
-                                    description='Enable OP with Cruise Engage, Disable this toggle if OP should be to engaged with cruise buttons'
+                                    description='Enable this if OP should engage with SCC active(default), Disable this if OP should engage with cruise buttons. This toggle is only availale for vehicles with SCC'
                                     isExpanded={ expandedCell == 'enableOPwithCC_enabled' }
                                     handleExpanded={ () => this.handleExpanded('enableOPwithCC_enabled') }
                                     handleChanged={ this.props.setEnableOPwithCC } />
