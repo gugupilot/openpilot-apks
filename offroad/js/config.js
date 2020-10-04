@@ -44,4 +44,5 @@ export const Params = {
     KEY_MDPS_HARNESS_ENABLED: 'MdpsHarnessEnabled',
     KEY_SCC_ENABLED: 'SccEnabled',
     KEY_OP_ENABLE_W_CRUISE: 'EnableOPwithCC',
+    KEY_SCC_HARNESS: 'SccHarnessPresent',
 };

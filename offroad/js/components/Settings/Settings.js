@@ -660,6 +660,7 @@ class Settings extends Component {
                 MdpsHarnessEnabled: mdpsHarnessEnabled,
                 SccEnabled: sccEnabled,
                 EnableOPwithCC: enableOPwithCC,
+                SccHarnessPresent: sscHarnessPresent,
             },
         } = this.props;
         const { expandedCell } = this.state;
@@ -701,17 +702,6 @@ class Settings extends Component {
                                     isExpanded={ expandedCell == 'radardisable_enabled' }
                                     handleExpanded={ () => this.handleExpanded('radardisable_enabled') }
                                     handleChanged={ this.props.setRadarDisableEnabled } />
-                            ) : null }                                
-                            { !parseInt(isPassive) && !!parseInt(communityFeatures) && !parseInt(radarDisableEnabled)? (
-                                <X.TableCell
-                                    type='switch'
-                                    title='Enable OP Long Control'
-                                    value={ !!parseInt(longControlEnabled) }
-                                    iconSource={ Icons.openpilot }
-                                    description='This toggle is used if SCC is availble on BUS2 with SCC Harness, This toggle wil also stop SCC messages from being create for non SCC vehicles'
-                                    isExpanded={ expandedCell == 'longcontrol_enabled' }
-                                    handleExpanded={ () => this.handleExpanded('longcontrol_enabled') }
-                                    handleChanged={ this.props.setLongControlEnabled } />
                             ) : null }
                             { !parseInt(isPassive) && !!parseInt(communityFeatures) ? (
                                 <X.TableCell
@@ -724,7 +714,29 @@ class Settings extends Component {
                                     handleExpanded={ () => this.handleExpanded('scc_enabled') }
                                     handleChanged={ this.props.setSccEnabled } />
                             ) : null }
-                            { !parseInt(isPassive) && !!parseInt(communityFeatures) && !!parseInt(sccEnabled) && !parseInt(longcontrol_enabled) && !parseInt(radarDisableEnabled) ? (
+                            { !parseInt(isPassive) && !!parseInt(communityFeatures) ? (
+                                <X.TableCell
+                                    type='switch'
+                                    title='SCC Radar Harness Present'
+                                    value={ !!parseInt(sccHarnessPresent) }
+                                    iconSource={ Icons.scc }
+                                    description='Car has stock SCC and has radar Harness'
+                                    isExpanded={ expandedCell == 'sccharness_present' }
+                                    handleExpanded={ () => this.handleExpanded('sccharness_present') }
+                                    handleChanged={ this.props.setSccHarnessPresent } />
+                            ) : null }
+                            { !parseInt(isPassive) && !!parseInt(communityFeatures) && !parseInt(radarDisableEnabled) && (!parseInt(sccEnabled) || !!parseInt(sccHarnessPresent)) ? (
+                                <X.TableCell
+                                    type='switch'
+                                    title='Enable OP Long Control'
+                                    value={ !!parseInt(longControlEnabled) }
+                                    iconSource={ Icons.openpilot }
+                                    description='This toggle will stop OP from creating SCC messages'
+                                    isExpanded={ expandedCell == 'longcontrol_enabled' }
+                                    handleExpanded={ () => this.handleExpanded('longcontrol_enabled') }
+                                    handleChanged={ this.props.setLongControlEnabled } />
+                            ) : null }
+                            { !parseInt(isPassive) && !!parseInt(communityFeatures) && !!parseInt(sccEnabled) && !parseInt(longControlEnabled) && !parseInt(radarDisableEnabled) ? (
                                 <X.TableCell
                                     type='switch'
                                     title='Enable OP with SCC active'
@@ -1070,6 +1082,9 @@ const mapDispatchToProps = dispatch => ({
     },
     setEnableOPwithCC: (enableOPwithCC) => {
         dispatch(updateParam(Params.KEY_OP_ENABLE_W_CRUISE, (enableOPwithCC | 0).toString()));
+    },
+    setSccHarnessPresent: (sccHarnessPresent) => {
+        dispatch(updateParam(Params.KEY_SCC_HARNESS, (sccHarnessPresent | 0).toString()));
     },
     deleteParam: (param) => {
         dispatch(deleteParam(param));

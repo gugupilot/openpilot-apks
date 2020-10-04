@@ -49,6 +49,7 @@ const PARAMS = [
   "MdpsHarnessEnabled",
   "SccEnabled",
   "EnableOPwithCC",
+  "SccHarnessPresent",
   "IsRHD"
 ].concat(ALERT_PARAMS);
 
