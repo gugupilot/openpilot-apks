@@ -148,11 +148,11 @@ class Settings extends Component {
     }
 
     handlePressedUpdateRevertMdps = async () => {
-        Alert.alert('Revert MDPS Harness Logic to Stock', [
+        Alert.alert('Revert MDPS Harness Logic', 'change to Stock', [
             { text: 'Cancel', onPress: () => {}, style: 'cancel' },
             { text: 'Run', onPress: () => ChffrPlus.updateRevertMdps() },
         ]);
-    }   
+    }
     // handleChangedSpeedLimitOffset(operator) {
     //     const { speedLimitOffset, isMetric } = this.props;
     //     let _speedLimitOffset;
@@ -788,6 +788,12 @@ class Settings extends Component {
                         </X.TableCell>
                     </X.Table>
                     <X.Table spacing='none'>
+                        <X.Button
+                            size='small'
+                            color='settingsDefault'
+                            onPress={ this.handlePressedUpdatePanda  }>
+                            Flash Panda
+                        </X.Button>
                         <X.TableCell
                             title='Version'
                             value={ `${ software } v${ version }` } />
@@ -806,12 +812,6 @@ class Settings extends Component {
                             title='Panda Dongle ID'
                             value={ (pandaDongleId != null && pandaDongleId != "unprovisioned") ? pandaDongleId : 'N/A' }
                             valueTextSize='tiny' />
-                        <X.Button
-                            size='small'
-                            color='settingsDefault'
-                            onPress={ this.handlePressedUpdatePanda  }>
-                            Flash Panda
-                        </X.Button>
                     </X.Table>
                     <X.Table color='darkBlue' padding='big'>
                         <X.Button
