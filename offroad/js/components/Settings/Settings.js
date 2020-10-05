@@ -660,7 +660,7 @@ class Settings extends Component {
                 MdpsHarnessEnabled: mdpsHarnessEnabled,
                 SccEnabled: sccEnabled,
                 EnableOPwithCC: enableOPwithCC,
-                SccHarnessPresent: sscHarnessPresent,
+                SccHarnessPresent: sccHarnessPresent,
             },
         } = this.props;
         const { expandedCell } = this.state;
@@ -725,18 +725,7 @@ class Settings extends Component {
                                     handleExpanded={ () => this.handleExpanded('sccharness_present') }
                                     handleChanged={ this.props.setSccHarnessPresent } />
                             ) : null }
-                            { !parseInt(isPassive) && !!parseInt(communityFeatures) && !parseInt(sccEnabled) ? (
-                                <X.TableCell
-                                    type='switch'
-                                    title='Enable OP Long Control'
-                                    value={ !!parseInt(longControlEnabled) }
-                                    iconSource={ Icons.openpilot }
-                                    description='This toggle will stop OP from creating SCC messages'
-                                    isExpanded={ expandedCell == 'longcontrol_enabled' }
-                                    handleExpanded={ () => this.handleExpanded('longcontrol_enabled') }
-                                    handleChanged={ this.props.setLongControlEnabled } />
-                            ) : null }
-                            { !parseInt(isPassive) && !!parseInt(communityFeatures) && !!parseInt(sccHarnessPresent) ? (
+                            { !parseInt(isPassive) && !!parseInt(communityFeatures) && (!parseInt(sccEnabled) || !!parseInt(sccHarnessPresent)) ? (
                                 <X.TableCell
                                     type='switch'
                                     title='Enable OP Long Control'
