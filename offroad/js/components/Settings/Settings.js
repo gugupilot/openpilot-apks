@@ -731,7 +731,7 @@ class Settings extends Component {
                                     title='Enable OP Long Control'
                                     value={ !!parseInt(longControlEnabled) }
                                     iconSource={ Icons.openpilot }
-                                    description='This toggle will stop OP from creating SCC messages'
+                                    description='This toggle will enable OP to create SCC messages'
                                     isExpanded={ expandedCell == 'longcontrol_enabled' }
                                     handleExpanded={ () => this.handleExpanded('longcontrol_enabled') }
                                     handleChanged={ this.props.setLongControlEnabled } />
@@ -742,7 +742,7 @@ class Settings extends Component {
                                     title='Enable OP with SCC active'
                                     value={ !!parseInt(enableOPwithCC) }
                                     iconSource={ Icons.speedLimit }
-                                    description='Enable this if OP should engage with SCC active(default), Disable this if OP should engage with cruise buttons. This toggle is only availale for vehicles with SCC'
+                                    description='Enable this if OP should engage with SCC active(default), Disable this if OP should engage with cruise buttons. This toggle is only available for vehicles with SCC'
                                     isExpanded={ expandedCell == 'enableOPwithCC_enabled' }
                                     handleExpanded={ () => this.handleExpanded('enableOPwithCC_enabled') }
                                     handleChanged={ this.props.setEnableOPwithCC } />
@@ -774,38 +774,16 @@ class Settings extends Component {
                                     Revert MDPS Harness to Stock
                                 </X.Button>
                             ) : null }
-                        <X.TableCell
-                            type='switch'
-                            title='Enable SSH'
-                            value={ isSshEnabled }
-                            iconSource={ Icons.developer }
-                            description='Allow devices to connect to your device using Secure Shell (SSH).'
-                            isExpanded={ expandedCell == 'ssh' }
-                            handleExpanded={ () => this.handleExpanded('ssh') }
-                            handleChanged={ this.props.setSshEnabled } />
-                        <X.TableCell
-                            iconSource={ Icons.developer }
-                            title='Authorized SSH Keys'
-                            descriptionExtra={ this.renderSshInput() }
-                            isExpanded={ expandedCell === 'ssh_keys' }
-                            handleExpanded={ this.toggleExpandGithubInput }
-                            type='custom'>
-                            <X.Button
-                                size='tiny'
-                                color='settingsDefault'
-                                onPress={ this.toggleExpandGithubInput }
-                                style={ { minWidth: '100%' } }>
-                                { expandedCell === 'ssh_keys' ? 'Cancel' : 'Edit' }
-                            </X.Button>
-                        </X.TableCell>
                     </X.Table>
-                    <X.Table spacing='none'>
+                    <X.Table color='darkBlue' padding='big'>
                         <X.Button
                             size='small'
                             color='settingsDefault'
                             onPress={ this.handlePressedUpdatePanda  }>
                             Flash Panda
                         </X.Button>
+                    </X.Table>
+                    <X.Table spacing='none'>
                         <X.TableCell
                             title='Version'
                             value={ `${ software } v${ version }` } />
@@ -825,6 +803,30 @@ class Settings extends Component {
                             value={ (pandaDongleId != null && pandaDongleId != "unprovisioned") ? pandaDongleId : 'N/A' }
                             valueTextSize='tiny' />
                     </X.Table>
+                    <X.TableCell
+                        type='switch'
+                        title='Enable SSH'
+                        value={ isSshEnabled }
+                        iconSource={ Icons.developer }
+                        description='Allow devices to connect to your device using Secure Shell (SSH).'
+                        isExpanded={ expandedCell == 'ssh' }
+                        handleExpanded={ () => this.handleExpanded('ssh') }
+                        handleChanged={ this.props.setSshEnabled } />
+                    <X.TableCell
+                        iconSource={ Icons.developer }
+                        title='Authorized SSH Keys'
+                        descriptionExtra={ this.renderSshInput() }
+                        isExpanded={ expandedCell === 'ssh_keys' }
+                        handleExpanded={ this.toggleExpandGithubInput }
+                        type='custom'>
+                        <X.Button
+                            size='tiny'
+                            color='settingsDefault'
+                            onPress={ this.toggleExpandGithubInput }
+                            style={ { minWidth: '100%' } }>
+                            { expandedCell === 'ssh_keys' ? 'Cancel' : 'Edit' }
+                         </X.Button>
+                    </X.TableCell>
                     <X.Table color='darkBlue' padding='big'>
                         <X.Button
                             color='settingsDefault'
