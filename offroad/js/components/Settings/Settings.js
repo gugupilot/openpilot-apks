@@ -1079,10 +1079,28 @@ const mapDispatchToProps = dispatch => ({
         dispatch(updateParam(Params.KEY_LANE_CHANGE_ENABLED, (laneChangeEnabled | 0).toString()));
     },
     setLongControlEnabled: (longControlEnabled) => {
-        dispatch(updateParam(Params.KEY_LONG_CONTROL_ENABLED, (longControlEnabled | 0).toString()));
+        if (longControlEnabled == 1) {
+            Alert.alert('Enable OP Long', 'This will enable OP to create SCC messages, This will cause faults if SCC messages are already present in the car.', [
+                { text: 'Cancel', onPress: () => {}, style: 'cancel' },
+                { text: 'Activate', onPress: () => {
+                    dispatch(updateParam(Params.KEY_LONG_CONTROL_ENABLED, (longControlEnabled | 0).toString()));
+                } },
+            ]);
+        } else {
+            dispatch(updateParam(Params.KEY_LONG_CONTROL_ENABLED, (longControlEnabled | 0).toString()));
+        }
     },
     setRadarDisableEnabled: (radarDisableEnabled) => {
-        dispatch(updateParam(Params.KEY_RADAR_DISABLE_ENABLED, (radarDisableEnabled | 0).toString()));
+        if (radarDisableEnabled == 1) {
+            Alert.alert('Activate Radar Disable Process', '!!WARNING!! Activating will send UDS command to disable the Radar, all stock active safety systems will be disabled. Only enable if you fully understand the functionality of vision based OP Long.', [
+                { text: 'Cancel', onPress: () => {}, style: 'cancel' },
+                { text: 'Activate', onPress: () => {
+                    dispatch(updateParam(Params.KEY_RADAR_DISABLE_ENABLED, (radarDisableEnabled | 0).toString()));
+                } },
+            ]);
+        } else {
+            dispatch(updateParam(Params.KEY_RADAR_DISABLE_ENABLED, (radarDisableEnabled | 0).toString()));
+        }
     },
     setMdpsHarnessEnabled: (mdpsHarnessEnabled) => {
         dispatch(updateParam(Params.KEY_MDPS_HARNESS_ENABLED, (mdpsHarnessEnabled | 0).toString()));
