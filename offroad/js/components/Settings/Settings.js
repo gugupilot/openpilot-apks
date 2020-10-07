@@ -698,7 +698,11 @@ class Settings extends Component {
                                     title='Activate Radar Disable'
                                     value={ !!parseInt(radarDisableEnabled) }
                                     iconSource={ Icons.aeb }
-                                    description='!!WARNING!! Enabling will send UDS command to disable the Radar, all stock active safety systems will be disabled. Only enable if you fully understand the functionality of vision based OP Long'
+                                    descriptionExtra={
+                                    <X.Text color='white' size='tiny'>
+                                         !!WARNING!! Enabling will send UDS command to disable the Radar, all stock active safety systems will be disabled. Only enable if you fully understand the functionality of vision based OP Long.{'\n'}
+                                    </X.Text>
+                                    }
                                     isExpanded={ expandedCell == 'radardisable_enabled' }
                                     handleExpanded={ () => this.handleExpanded('radardisable_enabled') }
                                     handleChanged={ this.props.setRadarDisableEnabled } />
@@ -731,7 +735,11 @@ class Settings extends Component {
                                     title='Enable OP Long Control'
                                     value={ !!parseInt(longControlEnabled) }
                                     iconSource={ Icons.openpilot }
-                                    description='This toggle will enable OP to create SCC messages'
+                                    descriptionExtra={
+                                    <X.Text color='white' size='tiny'>
+                                         This will enable OP to create SCC messages, This will cause faults if SCC messages are already present in the car.{'\n'}
+                                    </X.Text>
+                                    }
                                     isExpanded={ expandedCell == 'longcontrol_enabled' }
                                     handleExpanded={ () => this.handleExpanded('longcontrol_enabled') }
                                     handleChanged={ this.props.setLongControlEnabled } />
