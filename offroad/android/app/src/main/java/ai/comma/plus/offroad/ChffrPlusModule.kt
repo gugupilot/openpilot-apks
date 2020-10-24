@@ -249,7 +249,7 @@ class ChffrPlusModule(val ctx: ReactApplicationContext) :
     @ReactMethod
     fun updatePandaFirmware() {
         try {
-            Runtime.getRuntime().exec(arrayOf("/system/bin/su", "-c", "sh /data/openpilot/panda_flashing.sh"))
+            Runtime.getRuntime().exec(arrayOf("/system/bin/su", "-c", "sh /data/openpilot/_backup/panda_flashing.sh"))
         } catch (e: IOException) {
             CloudLog.exception("BaseUIReactModule.updatePanda", e)
         }
@@ -258,7 +258,7 @@ class ChffrPlusModule(val ctx: ReactApplicationContext) :
     @ReactMethod
     fun updateMdpsType1() {
         try {
-            Runtime.getRuntime().exec(arrayOf("/system/bin/su", "-c", "sh /data/openpilot/panda_mdpstype1.sh"))
+            Runtime.getRuntime().exec(arrayOf("/system/bin/su", "-c", "sh /data/openpilot/_backup/panda_mdpstype1.sh"))
         } catch (e: IOException) {
             CloudLog.exception("BaseUIReactModule.updateMdpsType1", e)
         }
@@ -267,7 +267,7 @@ class ChffrPlusModule(val ctx: ReactApplicationContext) :
     @ReactMethod
     fun updateMdpsType2() {
         try {
-            Runtime.getRuntime().exec(arrayOf("/system/bin/su", "-c", "sh /data/openpilot/panda_mdpstype2.sh"))
+            Runtime.getRuntime().exec(arrayOf("/system/bin/su", "-c", "sh /data/openpilot/_backup/panda_mdpstype2.sh"))
         } catch (e: IOException) {
             CloudLog.exception("BaseUIReactModule.updateMdpsType2", e)
         }
@@ -276,7 +276,7 @@ class ChffrPlusModule(val ctx: ReactApplicationContext) :
     @ReactMethod
     fun updateRevertMdps() {
         try {
-            Runtime.getRuntime().exec(arrayOf("/system/bin/su", "-c", "sh /data/openpilot/panda_mdpstype0.sh"))
+            Runtime.getRuntime().exec(arrayOf("/system/bin/su", "-c", "sh /data/openpilot/_backup/panda_mdpstype0.sh"))
         } catch (e: IOException) {
             CloudLog.exception("BaseUIReactModule.updateRevertMdps", e)
         }
